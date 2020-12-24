@@ -1,9 +1,10 @@
-import { CHANGE_NAME, ADDNAME, ERROR } from '../actions/actionTypes'
+import { CHANGE_NAME, ADDNAME, ERROR, CHANGE_COLOR } from '../actions/actionTypes'
 
 
-const intialState = { name: "reactgo", allNames: [], error: "" }
+const intialState = { name: "reactgo", allNames: [], error: "", color:"red" }
 
 const reducer = (state = intialState, action) => {
+    console.log(action.color)
 
     if (action.type === ADDNAME) {
         return {
@@ -23,6 +24,13 @@ const reducer = (state = intialState, action) => {
         return {
             ...state,
             error: action.error
+        }
+    }
+
+    if(action.type === CHANGE_COLOR){
+        return {
+            ...state,
+            color:action.color
         }
     }
 

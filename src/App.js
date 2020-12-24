@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
-import { addname, error, changeName } from './actions/actionCreators'
+import { addname, error, changeName, changeColor } from './actions/actionCreators'
 import './App.css'
 
 class App extends Component {
@@ -20,6 +20,11 @@ class App extends Component {
 
   }
 
+  onClick = ()=>{
+    var colorName = Math.floor(100000 + Math.random() * 900000)
+    this.props.onColor("#"+colorName)
+  }
+
   render() {
     return (
       <div className="App">
@@ -35,7 +40,12 @@ class App extends Component {
             {this.props.allNames && this.props.allNames.map(name => (
               <li key={name}> {name}</li>
             ))}
-          </ul></div>
+          </ul>
+          </div>
+          <div className="colorbox">
+            <button onClick={this.onClick}>Change Color</button>
+            <div style={{'backgroundColor':`${this.props.color}`}}></div>
+          </div>
 
       </div>
     );
@@ -47,7 +57,8 @@ const mapStatetoProps = (state) => {
   return {
     name: state.name,
     error: state.error,
-    allNames: state.allNames
+    allNames: state.allNames,
+    color: state.color
   }
 }
 
@@ -56,7 +67,8 @@ const mapDispatchtoProps = (dispatch) => {
   return {
     onChangeName: (name) => dispatch(changeName(name)),
     onAddName: () => dispatch(addname()),
-    onError: (err) => dispatch(error(err))
+    onError: (err) => dispatch(error(err)),
+    onColor: (color)=> dispatch(changeColor(color))
   }
 }
 
